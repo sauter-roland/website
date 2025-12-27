@@ -5,8 +5,8 @@ export default function Work() {
             
             <div className="space-y-8">
                 <div className="border-l-4 border-blue-500 pl-4">
-                    <h2 className="text-2xl font-semibold">Senior Software Engineer</h2>
-                    <p className="text-gray-600 mb-2">Company Name | 2020 - Present</p>
+                    <h2 className="text-2xl font-semibold">Software Engineer, Senior Engineer, Staff Engineer</h2>
+                    <p className="text-gray-600 mb-2">Kongsberg Digital | 09/2021 - Present</p>
                     <ul className="list-disc list-inside space-y-1">
                         <li>Led development of key features</li>
                         <li>Mentored junior developers</li>

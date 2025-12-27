@@ -1,4 +1,4 @@
-export default function Science() {
+export default function Reading() {
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold mb-6">Books that left an impression on me</h1>

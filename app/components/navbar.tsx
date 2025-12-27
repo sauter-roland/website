@@ -11,9 +11,9 @@ export default function Navbar() {
         </div>
         <div className="nav-links">
           <Link href="#about" className="nav-link">About</Link>
+          <Link href="#work" className="nav-link">Work</Link>
           <Link href="#projects" className="nav-link">Projects</Link>
           <Link href="#science" className="nav-link">Science</Link>
-          <Link href="#work" className="nav-link">Work</Link>
           <Link href="#reading" className="nav-link">Reading</Link>
         </div>
       </div>
