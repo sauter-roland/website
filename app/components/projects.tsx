@@ -4,12 +4,8 @@ export default function Projects() {
             <h1 className="text-4xl font-bold mb-6">Projects</h1>
             <div className="space-y-8">
                 <div className="border-l-4 border-purple-500 pl-4">
-                    <h2 className="text-2xl font-semibold">Reading</h2>
+                    <h2 className="text-2xl font-semibold">Coming soon...</h2>
                     <p className="text-gray-600 dark:text-gray-400 mb-2">Description of project one.</p>
-                </div>
-                <div className="border-l-4 border-purple-500 pl-4">
-                    <h2 className="text-2xl font-semibold">Writing</h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">Description of project two.</p>
                 </div>
             </div>
         </div>

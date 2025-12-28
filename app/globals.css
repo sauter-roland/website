@@ -64,3 +64,7 @@ body {
     color: var(--foreground);
   }
 }
+
+a {
+  color:rgb(9, 249, 249);
+}
