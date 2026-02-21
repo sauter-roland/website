@@ -6,7 +6,7 @@ export default function About() {
       <h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
         Hi! I'm Roland Sauter.
       </h1>
-      <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400 mt-4">
+      <p className="max-w-lg text-lg leading-8 text-zinc-600 dark:text-zinc-400 mt-4">
         I'm a software engineer, (data) scientist, and generally a nerd based in Oslo, Norway.
         This is my first attempt at a personal website, so expect it to evolve over time.
 
