@@ -2,6 +2,17 @@
  * Single source of truth for the section chrome. The sidebar tree, the tab bar, the prompt
  * line above each section and the line-number gutters all read from `sections`, so adding a
  * section means editing this file and rendering one more `<Section>` in `app/page.tsx`.
+ *
+ * Three fields have to agree, because the editor conceit only works if it is coherent:
+ * a reader who knows what a `.py` file looks like will notice if it is the wrong colour or
+ * opened with the wrong tool. When changing `file`, change `iconClass` and `command` with it.
+ *
+ *   extension   iconClass          command idiom
+ *   .tsx        text-accent        cat <file>
+ *   .py         text-amber         python <file>
+ *   .sh         text-green         ./<file>
+ *   .tex        text-purple        pdflatex <file>
+ *   .md         text-fg-faint      less <file>
  */
 
 export type SectionId = "about" | "work" | "projects" | "science" | "reading";
@@ -29,16 +40,16 @@ export const sections: Section[] = [
     tag: "about",
     icon: "◆",
     iconClass: "text-accent",
-    command: "cat about.md",
+    command: "cat about.tsx",
     lines: 18,
   },
   {
     id: "work",
     file: "work.py",
     tag: "work experience",
-    icon: "◆",
-    iconClass: "text-accent",
-    command: "cat work.md",
+    icon: "◼",
+    iconClass: "text-amber",
+    command: "python work.py",
     lines: 22,
   },
   {
@@ -47,16 +58,16 @@ export const sections: Section[] = [
     tag: "projects",
     icon: "▪",
     iconClass: "text-green",
-    command: "ls -la projects/",
+    command: "./projects.sh",
     lines: 12,
   },
   {
     id: "science",
     file: "science.tex",
     tag: "scientific background",
-    icon: "◼",
-    iconClass: "text-amber",
-    command: "python science.py",
+    icon: "▦",
+    iconClass: "text-purple",
+    command: "pdflatex science.tex",
     lines: 18,
   },
   {
