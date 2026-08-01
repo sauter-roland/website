@@ -1,66 +1,273 @@
 @import "tailwindcss";
 
+/*
+ * Catppuccin Mocha token set. See docs/spec-terminal-ui.md §2 — the hexes there are
+ * measured for contrast against --color-bg, so re-check any colour you change.
+ */
+@theme {
+  /* surfaces */
+  --color-panel: #181825;
+  --color-bg: #1e1e2e;
+  --color-chrome: #313244;
+  --color-line: #45475a;
+  --color-line-soft: #3a3c50;
+
+  /* text */
+  --color-fg: #cdd6f4;
+  --color-lead: #cdd6f4;
+  --color-fg-dim: #bac2de;
+  --color-body: #b3bcd6;
+  --color-fg-faint: #9399b2;
+  /*
+   * fg-faint is measured against --color-bg (5.81:1), but the title bar, sidebar and status
+   * bar sit on the lighter --color-chrome, where the same hex drops to 4.45:1 and misses AA.
+   * This is the same colour nudged just far enough to clear it: 4.85:1 on chrome, 6.32:1 on bg.
+   */
+  --color-faint-chrome: #9aa0b8;
+  /* ghost is deliberately below AA — line-number gutter only, never readable content */
+  --color-ghost: #585b70;
+
+  /* accents */
+  --color-accent: #94e2d5;
+  --color-purple: #cba6f7;
+  --color-amber: #f9e2af;
+  --color-green: #a6e3a1;
+  --color-rose: #f38ba8;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* single breakpoint (§6): `wide:` above 900px, `max-wide:` below */
+  --breakpoint-wide: 900px;
+}
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --link: #4fd1c5;
+  /* not a colour token — only exists so rgba() tints can vary the alpha */
+  --accent-rgb: 148, 226, 213;
 }
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background: var(--color-panel);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * The title bar (38px) and tab bar (39px) are both sticky, so 77px of viewport is
+   * permanently occupied. Without this every anchor jump lands the heading underneath them.
+   */
+  section {
+    scroll-margin-top: 84px;
+  }
+
+  /* §7.5 — the mockup has no focus styles at all; one rule covers every interactive element */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
-/* Navbar styles */
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+/*
+ * Only what Tailwind utilities cannot express: pseudo-elements, keyframes, hidden
+ * scrollbars, and the descendant-scoped link style. Everything else lives in the components.
+ */
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 8px;
+    left: -9999px;
+    z-index: 100;
+    padding: 8px 14px;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background: var(--color-chrome);
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+
+  .skip-link:focus {
+    left: 8px;
+  }
+
+  /*
+   * Typography is scoped to `.content` rather than set globally, so the sidebar, tabs and
+   * status bar keep their own styling. Defined once here instead of repeating the same
+   * className string across all five sections.
+   */
+  .content a {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.3);
+  }
+
+  .content a:hover {
+    border-bottom-color: var(--color-accent);
+  }
+
+  .content h1 {
+    margin-bottom: 18px;
+    color: var(--color-fg);
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.028em;
+  }
+
+  .content h2 {
+    margin-bottom: 4px;
+    color: var(--color-fg);
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  .content h3 {
+    margin-bottom: 3px;
+    color: var(--color-fg);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .content p {
+    max-width: 64ch;
+    color: var(--color-body);
+  }
+
+  /* long unbroken URLs (the GEMCAT link) would otherwise scroll the page sideways on mobile */
+  .content {
+    overflow-wrap: break-word;
+  }
+
+  .content p + p {
+    margin-top: 14px;
+  }
+
+  .content .lead {
+    max-width: 62ch;
+    color: var(--color-lead);
+    font-size: 17px;
+    line-height: 1.72;
+  }
+
+  .content .lead + .lead {
+    margin-top: 16px;
+  }
+
+  .content .kicker {
+    color: var(--color-fg-faint);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+
+  .content .dim-weak {
+    color: var(--color-fg-faint);
+    font-weight: 400;
+  }
+
+  @media (max-width: 900px) {
+    .content h1 {
+      font-size: 30px;
+    }
+  }
+
+  .sec-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    color: var(--color-fg-faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .sec-tag::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .comment {
+    color: var(--color-fg-faint);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+
+  .comment::before {
+    content: "// ";
+  }
+
+  .bullets {
+    list-style: none;
+    margin-top: 12px;
+  }
+
+  .bullets li {
+    position: relative;
+    margin-bottom: 7px;
+    padding-left: 20px;
+    color: var(--color-body);
+  }
+
+  .bullets li::before {
+    content: "\25b8";
+    position: absolute;
+    top: 1px;
+    left: 0;
+    color: var(--color-accent);
+    opacity: 0.65;
+    font-size: 11px;
+  }
+
+  /* zsh prompt keeps the git segment separated by a non-breaking space */
+  .p-git::before {
+    content: " \00a0";
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.82em;
+    margin-left: 6px;
+    background: var(--color-accent);
+    vertical-align: -2px;
+  }
+
+  /* §7.6 — a perpetual blink is opt-in, never forced */
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor {
+      animation: blink 1.15s step-end infinite;
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.nav-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-link {
-  color: var(--foreground);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.nav-link:hover {
-  opacity: 0.85;
-}
-
-.site-nav {
-  background: rgba(6, 6, 6, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.nav-link {
-  color: var(--foreground);
-}
-
-p {
-  color: lightgray;
-}
-
-a {
-  color: var(--link);
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
