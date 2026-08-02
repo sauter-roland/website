@@ -1,32 +1,32 @@
+import Section from "./components/section";
 import About from "./components/about";
-import Projects from "./components/projects";
-import Reading from "./components/reading";
-import Science from "./components/science";
 import Work from "./components/work";
+import Projects from "./components/projects";
+import Science from "./components/science";
+import Reading from "./components/reading";
 
 export default function Home() {
   return (
-    <main>
-      <section id="about">
+    <>
+      <Section id="about">
         <About />
-      </section>
+      </Section>
 
-      <section id="projects">
-        <Projects />
-      </section>
-
-      <section id="work">
+      <Section id="work">
         <Work />
-      </section>
+      </Section>
 
-      <section id="science">
+      <Section id="projects">
+        <Projects />
+      </Section>
+
+      <Section id="science">
         <Science />
-      </section>
+      </Section>
 
-      <section id="reading">
+      <Section id="reading">
         <Reading />
-      </section>
-      
-    </main>
+      </Section>
+    </>
   );
 }

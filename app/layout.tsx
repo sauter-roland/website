@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/navbar";
+import NavProvider from "./components/nav-provider";
+import Sidebar from "./components/sidebar";
+import StatusBar from "./components/status-bar";
+import TabBar from "./components/tab-bar";
+import TitleBar from "./components/title-bar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -24,12 +28,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-          <Navbar />
-          {children}
+    // the font variables must land on :root — `--font-sans` in globals.css is declared there
+    // and would resolve to the guaranteed-invalid value if they were only on <body>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body>
+        <a className="skip-link" href="#about">
+          Skip to content
+        </a>
+        <div className="mx-auto flex min-h-[100dvh] max-w-[1240px] flex-col border-x border-line bg-bg">
+          <TitleBar />
+          {/* one observer, two navigations */}
+          <NavProvider>
+            <div className="flex min-h-0 flex-1">
+              <Sidebar />
+              <main className="min-w-0 flex-1">
+                <TabBar />
+                {children}
+              </main>
+            </div>
+          </NavProvider>
+          <StatusBar />
+        </div>
       </body>
     </html>
   );
