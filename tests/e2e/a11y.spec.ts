@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { sections } from "../../lib/site";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -37,9 +38,9 @@ test("heading levels never skip", async ({ page }) => {
 });
 
 test("decoration is hidden from assistive tech", async ({ page }) => {
-  // line-number gutters
+  // line-number gutters — one per section, so this tracks lib/site.ts
   const gutters = page.locator("section > div[aria-hidden='true']");
-  await expect(gutters).toHaveCount(5);
+  await expect(gutters).toHaveCount(sections.length);
 
   // window dots, file-type glyphs, blinking cursor, live dot
   for (const selector of [

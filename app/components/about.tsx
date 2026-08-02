@@ -3,18 +3,19 @@ import Chip from "./ui/chip";
 
 const facts = [
   { key: "location", value: "Oslo, Norway" },
-  { key: "current", value: "Kongsberg Digital" },
   { key: "education", value: "PhD, Bioinformatics" },
+  { key: "languages", value: "German, English, Norwegian" },
   { key: "focus", value: "optimization, data, AI" },
 ];
 
-const skills = [
-  "Python",
-  "TypeScript",
+/** Broad domains — the concrete toolchain lives in the stack section. */
+const domains = [
   "Optimization",
   "Data Engineering",
+  "Machine Learning",
+  "Digital Twins",
   "Systems Biology",
-  "LLM Integration",
+  "AI and Copilot",
 ];
 
 export default function About() {
@@ -31,9 +32,16 @@ export default function About() {
         time.
       </p>
       <p className="lead">
-        These days I am a software engineer at Kongsberg Digital working on everything from
-        optimizations that save customers millions of kroners, to work processes that improve
-        maintenance and safety, to AI integrations that inform busy engineers.
+        These days I work at the intersection of software engineering, data science, and
+        optimization: everything from models that save customers millions of kroner, to work
+        processes that improve maintenance and safety, to AI integrations that inform busy
+        engineers.
+      </p>
+      <p className="lead">
+        The problems I enjoy most are the ones that start out ill-defined &mdash; where the
+        customer is not yet sure what they need, or someone else has already called it
+        impossible. Most of what makes that work is explaining complicated things clearly and
+        being comfortable across disciplines, languages, and cultures.
       </p>
 
       <div className="mt-[34px] flex flex-wrap items-start gap-[30px]">
@@ -56,8 +64,8 @@ export default function About() {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-[7px]">
-        {skills.map((skill) => (
-          <Chip key={skill}>{skill}</Chip>
+        {domains.map((domain) => (
+          <Chip key={domain}>{domain}</Chip>
         ))}
       </div>
     </>

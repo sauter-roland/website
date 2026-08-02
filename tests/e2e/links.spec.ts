@@ -1,17 +1,22 @@
 import { expect, test } from "@playwright/test";
 import { contacts } from "../../lib/site";
 
-/** The four in-content links the spec requires to survive the redesign verbatim (§8). */
+/**
+ * In-content links. The first four are the ones the redesign had to carry over verbatim
+ * (spec §8); the last two are the publications added with the CV content.
+ */
 const contentLinks = [
   "https://kongsbergdigital.com/customer-stories/shell-ormen-lange",
   "https://github.com/MolecularBioinformatics/GEMCAT",
   "https://hdl.handle.net/11250/3221977",
   "https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/",
+  "https://academic.oup.com/nargab/article/7/1/lqaf003/7993917",
+  "https://www.mdpi.com/2218-273X/14/5/602",
 ];
 
 const allExternal = [...contentLinks, ...contacts.map((c) => c.href)];
 
-test("the four content links survived the redesign", async ({ page }) => {
+test("every content link is present exactly once", async ({ page }) => {
   await page.goto("/");
   for (const href of contentLinks) {
     await expect(page.locator(`a[href="${href}"]`)).toHaveCount(1);
