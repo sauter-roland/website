@@ -1,6 +1,7 @@
 import Section from "./components/section";
 import About from "./components/about";
 import Work from "./components/work";
+import Stack from "./components/stack";
 import Projects from "./components/projects";
 import Science from "./components/science";
 import Reading from "./components/reading";
@@ -14,6 +15,10 @@ export default function Home() {
 
       <Section id="work">
         <Work />
+      </Section>
+
+      <Section id="stack">
+        <Stack />
       </Section>
 
       <Section id="projects">

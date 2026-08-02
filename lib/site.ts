@@ -12,10 +12,17 @@
  *   .py         text-amber         python <file>
  *   .sh         text-green         ./<file>
  *   .tex        text-purple        pdflatex <file>
+ *   .json       text-rose          jq . <file>
  *   .md         text-fg-faint      less <file>
  */
 
-export type SectionId = "about" | "work" | "projects" | "science" | "reading";
+export type SectionId =
+  | "about"
+  | "work"
+  | "stack"
+  | "projects"
+  | "science"
+  | "reading";
 
 export type Section = {
   id: SectionId;
@@ -41,7 +48,7 @@ export const sections: Section[] = [
     icon: "◆",
     iconClass: "text-accent",
     command: "cat about.tsx",
-    lines: 18,
+    lines: 21,
   },
   {
     id: "work",
@@ -50,7 +57,16 @@ export const sections: Section[] = [
     icon: "◼",
     iconClass: "text-amber",
     command: "python work.py",
-    lines: 22,
+    lines: 24,
+  },
+  {
+    id: "stack",
+    file: "stack.json",
+    tag: "tools and technologies",
+    icon: "◈",
+    iconClass: "text-rose",
+    command: "jq . stack.json",
+    lines: 26,
   },
   {
     id: "projects",
@@ -68,7 +84,7 @@ export const sections: Section[] = [
     icon: "▦",
     iconClass: "text-purple",
     command: "pdflatex science.tex",
-    lines: 18,
+    lines: 35,
   },
   {
     id: "reading",
@@ -89,5 +105,5 @@ export const contacts = [
 export const meta = [
   { key: "loc", value: "Oslo, NO" },
   { key: "tz", value: "CET / UTC+1" },
-  { key: "role", value: "Staff Engineer" },
+  { key: "role", value: "Software Engineer" },
 ];
