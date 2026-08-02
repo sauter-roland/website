@@ -21,16 +21,13 @@ for (const source of ["Sections", "File explorer"] as const) {
         (id) => window.location.hash === `#${id}`,
         section.id,
       );
-      // let the smooth scroll settle
-      await page.waitForTimeout(600);
-
+      // poll instead of a fixed sleep so this doesn't flake on slow CI runners
       const heading = page.locator(`#${section.id} h1, #${section.id} h2`).first();
-      const box = await heading.boundingBox();
-      expect(box, `${section.id} heading should be laid out`).not.toBeNull();
-      expect(
-        box!.y,
-        `${section.id} heading is hidden behind the sticky chrome`,
-      ).toBeGreaterThanOrEqual(STICKY_CHROME);
+      await expect
+        .poll(async () => (await heading.boundingBox())?.y ?? -1, {
+          message: `${section.id} heading is hidden behind the sticky chrome`,
+        })
+        .toBeGreaterThanOrEqual(STICKY_CHROME);
     }
   });
 }

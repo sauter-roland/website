@@ -61,7 +61,7 @@ test("no line numbers or icon glyphs reach the accessibility tree", async ({ pag
   expect(text).toContain("Roland Sauter");
 
   // the decorative glyphs used for file icons and bullets
-  for (const glyph of ["◆", "▪", "◼", "▤", "↗"]) {
+  for (const glyph of ["◆", "▪", "◼", "▦", "▤", "↗"]) {
     const exposed = await page.evaluate((g) => {
       const walk = (node: Element): boolean => {
         if (node.getAttribute("aria-hidden") === "true") return false;
